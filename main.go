@@ -5,6 +5,5 @@ import (
 )
 
 func main() {
-	serverHandling.PrintLink()
 	serverHandling.StartServer()
 }
