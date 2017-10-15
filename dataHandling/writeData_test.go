@@ -7,13 +7,13 @@ import (
 	"os"
 )
 
-func TestSaveEntry(t *testing.T) {
+func TestCreateEntry(t *testing.T) {
 
 	dir := "../" + config.BlogDir
 	entryTitle := "TestEntry_Save"
 	savedContent := "abcd1234"
 
-	SaveEntry(dir, entryTitle, savedContent)
+	CreateEntry(dir, entryTitle, savedContent)
 
 	readContent, err := ioutil.ReadFile(dir + entryTitle)
 

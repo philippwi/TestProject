@@ -2,26 +2,36 @@ package dataHandling
 
 import (
 	"io/ioutil"
-	"os"
+	"time"
 )
 
 
-func SaveEntry(dir, entry, content string){
+func CreateEntry(dir, entry, content string){
 
-	contentConverted := []byte(content)
-
-	err := ioutil.WriteFile(dir + entry, contentConverted, 0777)
+	err := ioutil.WriteFile(dir + entry, []byte(content), 0777)
 
 	if err != nil {
 		panic(err)
 	}
 }
 
-func DeleteEntry(dir, entry string){
+func CreateUser(dir, name, password string){
 
-	err := os.Remove(dir + entry)
+	if UserExists(dir, name) {
+		return
+	}
+
+	content :=
+		"password: " + password +
+		"\ncreationDate: " + time.Now().Format("02.01.2006")
+
+	err := ioutil.WriteFile(dir + name, []byte(content), 0777)
 
 	if err != nil {
 		panic(err)
 	}
+}
+
+func UserExists (dir, name string) bool{
+
 }
