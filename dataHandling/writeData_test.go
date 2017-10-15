@@ -31,3 +31,23 @@ func TestSaveEntry(t *testing.T) {
 		t.Error("Function test passed but error deleting test file: " + err.Error())
 	}
 }
+
+
+
+func TestDeleteEntry(t *testing.T) {
+
+	dir := "../" + config.BlogDir
+	entryTitle := "TestEntry_Delete"
+
+	err1 := ioutil.WriteFile(dir + entryTitle, []byte(""), 0777)
+
+	if err1 != nil {
+		t.Error("Error creating test file: " + err1.Error())
+	}
+
+	DeleteEntry(dir, entryTitle)
+
+	if _, err2 := os.Stat(dir + entryTitle); !os.IsNotExist(err2) {
+		t.Error("Testfile " + entryTitle + " was not deleted")
+	}
+}
