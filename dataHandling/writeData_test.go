@@ -32,8 +32,6 @@ func TestCreateEntry(t *testing.T) {
 	}
 }
 
-
-
 func TestDeleteEntry(t *testing.T) {
 
 	dir := "../" + config.BlogDir
@@ -49,5 +47,29 @@ func TestDeleteEntry(t *testing.T) {
 
 	if _, err2 := os.Stat(dir + entryTitle); !os.IsNotExist(err2) {
 		t.Error("Testfile " + entryTitle + " was not deleted")
+	}
+}
+
+func TestCreateUser(t *testing.T) {
+	dir := "../" + config.UserDir
+	name := "Hans123"
+	password := "12345"
+
+	CreateUser(dir, name, password)
+
+	/*readContent*/ _ , err := ioutil.ReadFile(dir + name)
+
+	if err != nil {
+		t.Error("Error reading file: " + err.Error())
+	}
+
+	//if string(readContent) != savedContent{
+	//	t.Error("Expected: " + savedContent + ", got: " + string(readContent))
+	//}
+
+	err = os.Remove(dir + name)
+
+	if err != nil{
+		t.Error("Function test passed but error deleting test file: " + err.Error())
 	}
 }

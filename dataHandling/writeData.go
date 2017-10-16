@@ -3,8 +3,8 @@ package dataHandling
 import (
 	"io/ioutil"
 	"time"
+	"os"
 )
-
 
 func CreateEntry(dir, entry, content string){
 
@@ -33,5 +33,17 @@ func CreateUser(dir, name, password string){
 }
 
 func UserExists (dir, name string) bool{
+	if _,err := os.Stat(dir+name); os.IsNotExist(err){
+		return false
+	}
 
+	return true
+}
+
+func DeleteEntry(dir, entry string){
+	err := os.Remove(dir + entry)
+
+	if err != nil {
+		panic(err)
+	}
 }
