@@ -1,9 +1,9 @@
 package main
 
 import (
-	"TestProject/serverHandling"
+	"TestProject/webServer"
 )
 
 func main() {
-	serverHandling.StartServer()
+	webServer.StartServer()
 }
