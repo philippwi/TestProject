@@ -1,6 +1,6 @@
 package config
 
-const Port = ":80"
+const Port = ":8080"
 
 const BlogDir = "BlogEntries/" //TestProject\BlogEntries
 
