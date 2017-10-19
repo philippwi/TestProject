@@ -14,3 +14,17 @@ func GetEntry(dir, entry string) string{
 
 	return string(content)
 }
+
+func PasswordCorrect (dir, name, enteredPassw string) bool{
+	password, err := ioutil.ReadFile(dir + name)
+
+	if err != nil {
+		panic(err)
+	}
+
+	if enteredPassw == string(password){
+		return true
+	} else{
+		return false
+	}
+}
