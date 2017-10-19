@@ -4,6 +4,7 @@ import (
 	"html/template"
 	"net/http"
 	"TestProject/config"
+	"TestProject/dataHandling"
 	"log"
 	"fmt"
 )
@@ -12,13 +13,20 @@ var tpl *template.Template
 
 func StartServer() {
 	tpl = template.Must(template.ParseGlob("webServer/*.gohtml"))
-	http.HandleFunc("/", idx)
+	http.HandleFunc("/", login)
 	http.HandleFunc("/apply", aply)
 	//http.Handle("/lol", http.NotFoundHandler())
 	http.ListenAndServe(config.Port, nil)
 }
 
-func idx(w http.ResponseWriter, req *http.Request){
+func login(w http.ResponseWriter, req *http.Request){
+
+	if req.Method == http.MethodPost{
+		userName := req.FormValue("fuser")
+		password := req.FormValue("fpass")
+		dataHandling.CreateUser(config.UserDir,userName,password)
+	}
+
 	err := tpl.ExecuteTemplate(w, "index.gohtml", nil)
 	if err != nil{
 		log.Println(err)
