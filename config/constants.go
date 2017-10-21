@@ -2,6 +2,6 @@ package config
 
 const Port = ":8080"
 
-const BlogDir = "BlogEntries/" //TestProject\BlogEntries
+const BlogDir = "webServer/BlogEntries/" //TestProject\BlogEntries
 
-const UserDir = "Users/"
+const UserDir = "webServer/Users/"
