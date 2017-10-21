@@ -5,12 +5,15 @@ import (
 	"net/http"
 	"TestProject/config"
 	"TestProject/dataHandling"
-	"fmt"
 	"path/filepath"
 	"os"
 )
 
 var tpl *template.Template
+
+type BlogList struct{
+	Blogs []Blog
+}
 
 type Blog struct{
 	Author string
@@ -50,23 +53,20 @@ func login(w http.ResponseWriter, r *http.Request){
 
 func home(w http.ResponseWriter, req *http.Request){
 
-	if req.Method == http.MethodPost{
-		f := req.FormValue("fname")
-
-		fmt.Println(f)
-	}
-
-	tpl.ExecuteTemplate(w, "home.html", nil)
+	tpl.ExecuteTemplate(w, "home.html", getBlogs())
 
 }
 
-func getBlogs() []Blog{
-	blogs := []Blog{}
+func getBlogs() BlogList{
+
+	blogList := BlogList{}
 
 	filepath.Walk(config.BlogDir, func(path string, f os.FileInfo, err error) error {
-		blogs = append(blogs, Blog{"",path,""})
+		if f.IsDir(){
+			return nil
+		}
+		blogList.Blogs = append(blogList.Blogs, Blog{"",f.Name(),""})
 		return nil
 	})
-
-
+	return blogList
 }

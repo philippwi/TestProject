@@ -6,8 +6,16 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 <body>
-<h1>Home</h1>
-<h2>fuck alda hier muss irgendwas hin!!</h2>
+
+<ul>
+    {{range .Blogs}}
+    <li><a href="$GOPATH/src/TestProject/BlogEntries/{{.Title}}">{{.Title}}</a></li>
+    {{end}}
+</ul>
+
+<script>
+    alert( 'Hello, world!' );
+</script>
 
 </body>
 </html>
