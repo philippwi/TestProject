@@ -5,14 +5,21 @@ import (
 	"net/http"
 	"TestProject/config"
 	"TestProject/dataHandling"
-	"log"
 	"fmt"
+	"path/filepath"
+	"os"
 )
 
 var tpl *template.Template
 
+type Blog struct{
+	Author string
+	Title string
+	Content string
+}
+
 func StartServer() {
-	tpl = template.Must(template.ParseGlob("webServer/*.gohtml"))
+	tpl = template.Must(template.ParseGlob("webServer/*.html"))
 	http.HandleFunc("/", login)
 	http.HandleFunc("/home", home)
 	//http.Handle("/lol", http.NotFoundHandler())
@@ -37,12 +44,8 @@ func login(w http.ResponseWriter, r *http.Request){
 		}
 	}
 
-	err := tpl.ExecuteTemplate(w, "index.gohtml", nil)
-	if err != nil{
-		log.Println(err)
-		http.Error(w, "Internal server error", http.StatusInternalServerError)
-		return
-	}
+	tpl.ExecuteTemplate(w, "index.html", nil)
+
 }
 
 func home(w http.ResponseWriter, req *http.Request){
@@ -52,10 +55,18 @@ func home(w http.ResponseWriter, req *http.Request){
 
 		fmt.Println(f)
 	}
-	err := tpl.ExecuteTemplate(w, "home.gohtml", nil)
-	if err != nil{
-		log.Println(err)
-		http.Error(w, "Internal server error", http.StatusInternalServerError)
-		return
-	}
+
+	tpl.ExecuteTemplate(w, "home.html", nil)
+
+}
+
+func getBlogs() []Blog{
+	blogs := []Blog{}
+
+	filepath.Walk(config.BlogDir, func(path string, f os.FileInfo, err error) error {
+		blogs = append(blogs, Blog{"",path,""})
+		return nil
+	})
+
+
 }
